@@ -454,4 +454,443 @@ class AppTest {
     void testMainRunsWithoutException() {
         assertDoesNotThrow(() -> App.main(new String[] {}));
     }
+
+    @Test
+    @DisplayName("Group integers by even and odd")
+    void testGroupByEvenOdd() {
+        List<Integer> input = Arrays.asList(1, 2, 3, 4);
+        Map<Boolean, List<Integer>> result = App.groupByEvenOdd(input);
+        assertEquals(Arrays.asList(2, 4), result.get(true), "Even numbers not grouped correctly");
+        assertEquals(Arrays.asList(1, 3), result.get(false), "Odd numbers not grouped correctly");
+    }
+
+    @Test
+    @DisplayName("Find the second largest element")
+    void testSecondLargest() {
+        List<Integer> input = Arrays.asList(10, 20, 30, 40);
+        assertEquals(Optional.of(30), App.secondLargest(input), "Second largest number incorrect");
+    }
+
+    @Test
+    @DisplayName("Get comma-separated list of first letters")
+    void testFirstLettersAsString() {
+        List<String> input = Arrays.asList("apple", "banana", "carrot");
+        String result = App.firstLettersAsString(input);
+        assertEquals("a,b,c", result, "First letters not joined correctly");
+    }
+
+    @Test
+    @DisplayName("Partition strings by presence of digits")
+    void testPartitionByContainsDigit() {
+        List<String> input = Arrays.asList("abc", "a2b", "xyz3", "nope");
+        Map<Boolean, List<String>> result = App.partitionByContainsDigit(input);
+        assertEquals(
+                Arrays.asList("a2b", "xyz3"),
+                result.get(true),
+                "Strings with digits not partitioned correctly");
+        assertEquals(
+                Arrays.asList("abc", "nope"),
+                result.get(false),
+                "Strings without digits not partitioned correctly");
+    }
+
+    @Test
+    @DisplayName("Remove palindromes from a list")
+    void testRemovePalindromes() {
+        List<String> input = Arrays.asList("madam", "apple", "kayak");
+        List<String> result = App.removePalindromes(input);
+        assertTrue(result.contains("apple"), "Non-palindromes were removed incorrectly");
+        assertFalse(result.contains("madam"), "Palindrome was not removed");
+        assertFalse(result.contains("kayak"), "Palindrome was not removed");
+    }
+
+    @Test
+    @DisplayName("Find most frequent string")
+    void testMostFrequentString() {
+        List<String> input = Arrays.asList("apple", "banana", "apple", "carrot", "banana", "apple");
+        Optional<String> result = App.mostFrequentString(input);
+        assertEquals(Optional.of("apple"), result, "Most frequent string not correct");
+    }
+
+    @Test
+    @DisplayName("Remove blank and empty strings")
+    void testRemoveBlankStrings() {
+        List<String> input = Arrays.asList("apple", "", "  ", "banana");
+        List<String> result = App.removeBlankStrings(input);
+        assertEquals(
+                Arrays.asList("apple", "banana"), result, "Blank or empty strings not removed");
+    }
+
+    @Test
+    @DisplayName("Double odd numbers")
+    void testDoubleOdds() {
+        List<Integer> input = Arrays.asList(1, 2, 3);
+        List<Integer> result = App.doubleOdds(input);
+        assertEquals(Arrays.asList(2, 2, 6), result, "Odds were not doubled correctly");
+    }
+
+    @Test
+    @DisplayName("Replace negatives with zero")
+    void testReplaceNegativesWithZero() {
+        List<Integer> input = Arrays.asList(-5, 3, 0, -1);
+        List<Integer> result = App.replaceNegativesWithZero(input);
+        assertEquals(
+                Arrays.asList(0, 3, 0, 0), result, "Negatives not replaced with zero correctly");
+    }
+
+    @Test
+    @DisplayName("Map string-lengths to their count")
+    void testLengthToCountMap() {
+        List<String> input = Arrays.asList("a", "bb", "b", "aaa");
+        Map<Integer, Long> result = App.lengthToCountMap(input);
+        assertEquals(2L, result.get(1), "Count for length 1 incorrect");
+        assertEquals(1L, result.get(2), "Count for length 2 incorrect");
+        assertEquals(1L, result.get(3), "Count for length 3 incorrect");
+    }
+
+    @Test
+    @DisplayName("Filter perfect squares")
+    void testFilterPerfectSquares() {
+        List<Integer> input = Arrays.asList(1, 2, 4, 9, 16, 20);
+        List<Integer> result = App.filterPerfectSquares(input);
+        assertEquals(Arrays.asList(1, 4, 9, 16), result, "Perfect squares not filtered correctly");
+    }
+
+    @Test
+    @DisplayName("Find first non-repeating string")
+    void testFirstNonRepeatingString() {
+        List<String> input = Arrays.asList("a", "b", "a", "c", "b", "d");
+        Optional<String> result = App.firstNonRepeatingString(input);
+        assertEquals(Optional.of("c"), result, "First non-repeating string not correct");
+    }
+
+    @Test
+    @DisplayName("Sum all odd numbers")
+    void testSumOfOdds() {
+        List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
+        int sum = App.sumOfOdds(input);
+        assertEquals(9, sum, "Sum of odd numbers incorrect");
+    }
+
+    @Test
+    @DisplayName("Capitalize first letter of each string")
+    void testCapitalizeFirstLetter() {
+        List<String> input = Arrays.asList("apple", "banana", "cat");
+        List<String> result = App.capitalizeFirstLetter(input);
+        assertEquals(
+                Arrays.asList("Apple", "Banana", "Cat"),
+                result,
+                "Strings not capitalized correctly");
+    }
+
+    @Test
+    @DisplayName("Find all pairs that sum to a given value")
+    void testPairsThatSumTo() {
+        List<Integer> input = Arrays.asList(1, 2, 3, 4);
+        List<int[]> result = App.pairsThatSumTo(input, 5);
+        assertTrue(
+                result.stream().anyMatch(arr -> arr[0] + arr[1] == 5),
+                "Pairs not found for sum correctly");
+    }
+
+    @Test
+    @DisplayName("Map word frequency in sentence, case-insensitive")
+    void testWordFrequency() {
+        String sentence = "apple banana apple Carrot banana carrot";
+        Map<String, Long> result = App.wordFrequency(sentence);
+        assertEquals(2L, result.get("banana"), "Banana frequency incorrect");
+        assertEquals(2L, result.get("carrot"), "Carrot frequency incorrect");
+    }
+
+    @Test
+    @DisplayName("Repeat each string twice")
+    void testRepeatStringsTwice() {
+        List<String> input = Arrays.asList("abc", "de");
+        List<String> result = App.repeatStringsTwice(input);
+        assertEquals(
+                Arrays.asList("abcabc", "dede"), result, "Strings not repeated twice correctly");
+    }
+
+    @Test
+    @DisplayName("Unique words from sentences")
+    void testUniqueWords() {
+        List<String> sentences = Arrays.asList("the cat", "the dog");
+        Set<String> result = App.uniqueWords(sentences);
+        assertTrue(
+                result.contains("cat") && result.contains("the"),
+                "Unique words not extracted correctly");
+    }
+
+    @Test
+    @DisplayName("Sum excluding largest and smallest numbers")
+    void testSumExcludingExtremes() {
+        List<Integer> input = Arrays.asList(10, 20, 30, 40);
+        int sum = App.sumExcludingExtremes(input);
+        assertEquals(50, sum, "Sum excluding extremes incorrect");
+    }
+
+    @Test
+    @DisplayName("Elements until first zero")
+    void testUntilFirstZero() {
+        List<Integer> input = Arrays.asList(1, 2, 0, 5);
+        List<Integer> result = App.untilFirstZero(input);
+        assertEquals(Arrays.asList(1, 2), result, "Elements until zero not found correctly");
+    }
+
+    @Test
+    @DisplayName("Group words by first character")
+    void testGroupByFirstChar() {
+        List<String> input = Arrays.asList("apple", "arm", "bat");
+        Map<Character, List<String>> result = App.groupByFirstChar(input);
+        assertEquals(
+                Arrays.asList("apple", "arm"),
+                result.get('a'),
+                "Grouping by first character incorrect");
+    }
+
+    @Test
+    @DisplayName("Get N longest strings")
+    void testNLongestStrings() {
+        List<String> input = Arrays.asList("a", "ab", "abc");
+        List<String> result = App.nLongestStrings(input, 2);
+        assertEquals(
+                Arrays.asList("abc", "ab"), result, "N longest strings not selected correctly");
+    }
+
+    @Test
+    @DisplayName("Join numbers with dash")
+    void testJoinNumbersWithDash() {
+        List<Integer> input = Arrays.asList(1, 2, 3);
+        String result = App.joinNumbersWithDash(input);
+        assertEquals("1-2-3", result, "Numbers not joined with dash correctly");
+    }
+
+    @Test
+    @DisplayName("Swap even and odd indexed elements")
+    void testSwapEvenOddIndexed() {
+        List<String> input = Arrays.asList("a", "b", "c", "d");
+        List<String> result = App.swapEvenOddIndexed(input);
+        assertEquals(Arrays.asList("b", "a", "d", "c"), result, "Even and odd indices not swapped");
+    }
+
+    @Test
+    @DisplayName("Return last N elements of list")
+    void testLastNElements() {
+        List<Integer> input = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> result = App.lastNElements(input, 2);
+        assertEquals(Arrays.asList(4, 5), result, "Last N elements not returned correctly");
+    }
+
+    @Test
+    @DisplayName("Partition numbers into primes and non-primes")
+    void testPartitionPrimes() {
+        List<Integer> input = Arrays.asList(2, 4, 5, 6);
+        Map<Boolean, List<Integer>> result = App.partitionPrimes(input);
+        assertEquals(Arrays.asList(2, 5), result.get(true), "Primes not partitioned correctly");
+    }
+
+    @Test
+    @DisplayName("Map strings to their reverse")
+    void testStringToReverse() {
+        List<String> input = Arrays.asList("abc", "de");
+        Map<String, String> result = App.stringToReverse(input);
+        assertEquals("cba", result.get("abc"), "String reverse incorrect");
+        assertEquals("ed", result.get("de"), "String reverse incorrect");
+    }
+
+    @Test
+    @DisplayName("Get all prefixes of each string")
+    void testGetAllPrefixes() {
+        List<String> input = Arrays.asList("ab");
+        List<String> result = App.getAllPrefixes(input);
+        assertTrue(result.containsAll(Arrays.asList("a", "ab")), "String prefixes not found");
+    }
+
+    @Test
+    @DisplayName("Multiply all numbers in list")
+    void testMultiplyAll() {
+        List<Integer> input = Arrays.asList(2, 3, 4);
+        int product = App.multiplyAll(input);
+        assertEquals(24, product, "Product not calculated correctly");
+    }
+
+    @Test
+    @DisplayName("Remove all vowels from strings")
+    void testRemoveVowels() {
+        List<String> input = Arrays.asList("apple", "sky");
+        List<String> result = App.removeVowels(input);
+        assertEquals(Arrays.asList("ppl", "sky"), result, "Vowels not removed correctly");
+    }
+
+    @Test
+    @DisplayName("Count vowels in strings (per item)")
+    void testVowelCounts() {
+        List<String> input = Arrays.asList("apple", "sky");
+        Map<String, Long> result = App.vowelCounts(input);
+        assertEquals(2L, result.get("apple"), "Vowel count of 'apple' incorrect");
+        assertEquals(0L, result.get("sky"), "Vowel count of 'sky' incorrect");
+    }
+
+    @Test
+    @DisplayName("Count the number of palindromes")
+    void testCountPalindromes() {
+        List<String> input = Arrays.asList("madam", "abba", "apple");
+        long count = App.countPalindromes(input);
+        assertEquals(2L, count, "Number of palindromes incorrect");
+    }
+
+    @Test
+    @DisplayName("Collect indices of negative numbers")
+    void testIndicesOfNegatives() {
+        List<Integer> input = Arrays.asList(-1, 2, -3, 4);
+        List<Integer> result = App.indicesOfNegatives(input);
+        assertEquals(Arrays.asList(0, 2), result, "Indices of negatives incorrect");
+    }
+
+    @Test
+    @DisplayName("Group numbers by digit sum")
+    void testGroupByDigitSum() {
+        List<Integer> input = Arrays.asList(12, 21, 3, 30);
+        Map<Integer, List<Integer>> result = App.groupByDigitSum(input);
+        assertTrue(result.get(3).contains(3), "Digit sum grouping incorrect - 3");
+        assertTrue(
+                result.get(3).contains(12) || result.get(3).contains(21),
+                "Digit sum grouping incorrect - 12/21");
+    }
+
+    @Test
+    @DisplayName("Repeat each word by its length")
+    void testRepeatByLength() {
+        List<String> input = Arrays.asList("hi", "a");
+        List<String> result = App.repeatByLength(input);
+        assertEquals(Arrays.asList("hihi", "a"), result, "Repeat by length incorrect");
+    }
+
+    @Test
+    @DisplayName("Check if string list is sorted")
+    void testIsSorted() {
+        List<String> input = Arrays.asList("a", "b", "c");
+        assertTrue(App.isSorted(input), "List should be sorted");
+        List<String> input2 = Arrays.asList("b", "a", "c");
+        assertFalse(App.isSorted(input2), "List should be unsorted");
+    }
+
+    @Test
+    @DisplayName("Zip two lists into entry pairs")
+    void testZip() {
+        List<String> l1 = Arrays.asList("a", "b");
+        List<Integer> l2 = Arrays.asList(1, 2);
+        List<Map.Entry<String, Integer>> result = App.zip(l1, l2);
+        assertEquals("a", result.get(0).getKey(), "First element of zipped pair incorrect");
+        assertEquals(1, result.get(0).getValue(), "Second element of zipped pair incorrect");
+    }
+
+    @Test
+    @DisplayName("Get all substrings from string list")
+    void testAllSubstrings() {
+        List<String> input = Arrays.asList("ab");
+        List<String> result = App.allSubstrings(input);
+        assertTrue(result.containsAll(Arrays.asList("a", "ab", "b")), "All substrings not found");
+    }
+
+    @Test
+    @DisplayName("Set all numbers to absolute value")
+    void testSetNegativesToAbsolute() {
+        List<Integer> input = Arrays.asList(-1, 2, -3);
+        List<Integer> result = App.setNegativesToAbsolute(input);
+        assertEquals(Arrays.asList(1, 2, 3), result, "Negative numbers not converted to absolute");
+    }
+
+    @Test
+    @DisplayName("Find all palindromic numbers")
+    void testPalindromicNumbers() {
+        List<Integer> input = Arrays.asList(121, 12, 22, 132);
+        List<Integer> result = App.palindromicNumbers(input);
+        assertTrue(result.containsAll(Arrays.asList(121, 22)), "Palindromic numbers not found");
+    }
+
+    @Test
+    @DisplayName("Map lowercased strings to their frequency")
+    void testLowerCaseFrequency() {
+        List<String> input = Arrays.asList("a", "A", "b");
+        Map<String, Long> result = App.lowerCaseFrequency(input);
+        assertEquals(2L, result.get("a"), "Lowercase frequency incorrect");
+    }
+
+    @Test
+    @DisplayName("Filter Fibonacci numbers")
+    void testFilterFibonacci() {
+        List<Integer> input = Arrays.asList(2, 3, 5, 6);
+        List<Integer> result = App.filterFibonacci(input);
+        assertTrue(result.containsAll(Arrays.asList(2, 3, 5)), "Fibonacci numbers not filtered");
+        assertFalse(result.contains(6), "Non-Fibonacci number included");
+    }
+
+    @Test
+    @DisplayName("Get all differences between consecutive numbers")
+    void testDifferences() {
+        List<Integer> input = Arrays.asList(1, 3, 6, 10);
+        List<Integer> result = App.differences(input);
+        assertEquals(
+                Arrays.asList(2, 3, 4),
+                result,
+                "Differences between consecutive elements incorrect");
+    }
+
+    @Test
+    @DisplayName("Count how many strings end with a vowel")
+    void testCountEndsWithVowel() {
+        List<String> input = Arrays.asList("apple", "banana", "dog");
+        long count = App.countEndsWithVowel(input);
+        assertEquals(2L, count, "Strings ending with vowel counted incorrectly");
+    }
+
+    @Test
+    @DisplayName("Get unique sorted words out of sentences")
+    void testUniqueSortedWords() {
+        List<String> input = Arrays.asList("the dog", "The Cat");
+        List<String> result = App.uniqueSortedWords(input);
+        assertEquals(Arrays.asList("cat", "dog", "the"), result, "Unique sorted words not found");
+    }
+
+    @Test
+    @DisplayName("Get product of all even numbers")
+    void testProductOfEvens() {
+        List<Integer> input = Arrays.asList(2, 3, 4, 5);
+        int result = App.productOfEvens(input);
+        assertEquals(8, result, "Product of even numbers incorrect");
+    }
+
+    @Test
+    @DisplayName("Replace each string by its length")
+    void testStringLengths() {
+        List<String> input = Arrays.asList("a", "abc");
+        List<Integer> result = App.stringLengths(input);
+        assertEquals(Arrays.asList(1, 3), result, "String lengths not mapped correctly");
+    }
+
+    @Test
+    @DisplayName("Flatten a list of integer lists")
+    void testFlattenIntegerLists() {
+        List<List<Integer>> input = Arrays.asList(Arrays.asList(1, 2), Arrays.asList(3));
+        List<Integer> result = App.flattenIntegerLists(input);
+        assertEquals(Arrays.asList(1, 2, 3), result, "Integer lists not flattened");
+    }
+
+    @Test
+    @DisplayName("Remove multiples of 3 or 5")
+    void testRemoveMultiplesOf3Or5() {
+        List<Integer> input = Arrays.asList(3, 5, 7, 9, 10, 11);
+        List<Integer> result = App.removeMultiplesOf3Or5(input);
+        assertEquals(Arrays.asList(7, 11), result, "Multiples of 3 or 5 not removed");
+    }
+
+    @Test
+    @DisplayName("Longest string for each string length")
+    void testLongestStringForEachLength() {
+        List<String> input = Arrays.asList("a", "bb", "cc", "bbb");
+        Map<Integer, String> result = App.longestStringForEachLength(input);
+        assertEquals("a", result.get(1), "Longest string for length 1 incorrect");
+        assertEquals("bbb", result.get(3), "Longest string for length 3 incorrect");
+    }
 }
