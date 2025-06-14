@@ -36,7 +36,7 @@ This repository contains concise, commented, and well-structured Java examples t
 ## Getting Started
 
 1. **Clone the repo:**  
-   `git clone https://github.com/yourusername/java-stream-api.git`
+   `git clone https://github.com/javadev/java-stream-api.git`
 2. **Open in your favorite IDE**
 3. **Run the main class (`App.java`)** to execute all examples, or call any method independently.
 
