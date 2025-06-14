@@ -180,9 +180,7 @@ public class App {
 
     // 30. Filter a list of Person objects, keeping only those who live in "City X".
     public static List<Person> filterPersonsByCity(List<Person> persons, String city) {
-        return persons.stream()
-                .filter(p -> city.equals(p.getCity()))
-                .collect(Collectors.toList());
+        return persons.stream().filter(p -> city.equals(p.getCity())).collect(Collectors.toList());
     }
 
     // 31. Reverse the order of elements in a list.
