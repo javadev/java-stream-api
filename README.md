@@ -1,5 +1,7 @@
 # java-stream-api
 
+[![Java CI](https://github.com/javadev/java-stream-api/actions/workflows/maven.yml/badge.svg)](https://github.com/javadev/java-stream-api/actions/workflows/maven.yml)
+
 ### Explore and master Java Streams with over 50 practical, real-world examples.
 
 This repository contains concise, commented, and well-structured Java examples that demonstrate how to use the Java Stream API for efficient and modern data processing. Each example focuses on a common data transformation or query operation — from filtering and mapping, to advanced grouping and aggregation.
