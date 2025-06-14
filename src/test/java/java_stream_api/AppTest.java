@@ -448,4 +448,10 @@ class AppTest {
         List<String> result = App.userNamesSortedByLength(Arrays.asList(u1, u2, u3));
         assertEquals(Arrays.asList("Eve", "Abi", "Angelina"), result, "Sort by length ascending");
     }
+
+    @Test
+    @DisplayName("Main method runs without throwing exceptions")
+    void testMainRunsWithoutException() {
+        assertDoesNotThrow(() -> App.main(new String[] {}));
+    }
 }
