@@ -1,5 +1,6 @@
 package java_stream_api;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -76,10 +77,10 @@ public class App {
     }
 
     // 13. Find people older than 18 years and return a list of their names.
-    public static List<String> namesOfUsersOlderThan18(List<java_stream_api.User> users) {
+    public static List<String> namesOfUsersOlderThan18(List<User> users) {
         return users.stream()
                 .filter(u -> u.getAge() > 18)
-                .map(java_stream_api.User::getName)
+                .map(User::getName)
                 .collect(Collectors.toList());
     }
 
@@ -131,15 +132,15 @@ public class App {
     }
 
     // 23. Sort a list of users by their age.
-    public static List<java_stream_api.User> sortUsersByAge(List<java_stream_api.User> users) {
+    public static List<User> sortUsersByAge(List<User> users) {
         return users.stream()
-                .sorted(Comparator.comparing(java_stream_api.User::getAge))
+                .sorted(Comparator.comparing(User::getAge))
                 .collect(Collectors.toList());
     }
 
     // 24. Find the user with the maximum age.
-    public static Optional<java_stream_api.User> userWithMaxAge(List<java_stream_api.User> users) {
-        return users.stream().max(Comparator.comparing(java_stream_api.User::getAge));
+    public static Optional<User> userWithMaxAge(List<User> users) {
+        return users.stream().max(Comparator.comparing(User::getAge));
     }
 
     // 25. Check if all strings in a list are longer than 3 characters.
@@ -156,7 +157,7 @@ public class App {
     }
 
     // 27. Calculate the total number of hobbies all users have.
-    public static int totalHobbiesCount(List<java_stream_api.User> users) {
+    public static int totalHobbiesCount(List<User> users) {
         return users.stream().mapToInt(u -> u.getHobbies().size()).sum();
     }
 
@@ -172,17 +173,15 @@ public class App {
     }
 
     // 29. Convert all users' birthdates to string "AGE MM YYYY".
-    public static List<java_stream_api.User> convertBirthdatesToString(
-            List<java_stream_api.User> users) {
+    public static List<User> convertBirthdatesToString(List<User> users) {
         users.forEach(user -> user.setBirthdate(user.getAge() + " MM YYYY"));
         return users;
     }
 
     // 30. Filter a list of Person objects, keeping only those who live in "City X".
-    public static List<java_stream_api.Person> filterPersonsByCity(
-            List<java_stream_api.Person> persons, String city) {
+    public static List<Person> filterPersonsByCity(List<Person> persons, String city) {
         return persons.stream()
-                .filter(p -> "City X".equals(p.getCity()))
+                .filter(p -> city.equals(p.getCity()))
                 .collect(Collectors.toList());
     }
 
@@ -196,7 +195,7 @@ public class App {
     // 32. Find the percentage of elements with the value "null" in a list.
     public static long percentageOfNulls(List<?> list) {
         long nullCount = list.stream().filter(Objects::isNull).count();
-        return list.size() == 0 ? 0 : (nullCount * 100) / list.size();
+        return list.isEmpty() ? 0 : (nullCount * 100) / list.size();
     }
 
     // 33. Shuffle the elements of a list randomly.
@@ -287,9 +286,8 @@ public class App {
     }
 
     // 48. Group users by their year of birth.
-    public static Map<Integer, List<java_stream_api.User>> groupUsersByBirthYear(
-            List<java_stream_api.User> users) {
-        return users.stream().collect(Collectors.groupingBy(java_stream_api.User::getBirthYear));
+    public static Map<Integer, List<User>> groupUsersByBirthYear(List<User> users) {
+        return users.stream().collect(Collectors.groupingBy(User::getBirthYear));
     }
 
     // 49. Find all unique characters in a list of strings and form them into a sorted list.
@@ -303,10 +301,89 @@ public class App {
     }
 
     // 50. Returns a list of user names, sorted by the length of these names.
-    public static List<String> userNamesSortedByLength(List<java_stream_api.User> users) {
+    public static List<String> userNamesSortedByLength(List<User> users) {
         return users.stream()
-                .map(java_stream_api.User::getName)
+                .map(User::getName)
                 .sorted(Comparator.comparingInt(String::length))
                 .collect(Collectors.toList());
+    }
+
+    public static void main(String[] args) {
+        System.out.println("== Java Stream API Methods Demo ==");
+
+        List<String> strList =
+                Arrays.asList("One", "Two", "Three", "Four", "Five", "And", "Again", "Javaaaa");
+        List<Integer> intsList = Arrays.asList(1, 2, 3, 4, 5, 6, 4, 2);
+        List<String> moreStrs = Arrays.asList("Apple", "Banana", "Axe", "cat");
+
+        List<User> users =
+                Arrays.asList(new User("Alice", 25), new User("Bob", 17), new User("Eve", 30));
+        users.get(0).getHobbies().addAll(Arrays.asList("reading", "sports"));
+        users.get(2).getHobbies().add("dancing");
+
+        List<Person> persons =
+                Arrays.asList(new Person("Tom", "City X"), new Person("Jane", "City Y"));
+
+        System.out.println("#1 Elements count: " + findNumberOfElements(strList));
+        System.out.println("#2 To uppercase: " + convertStringsToUppercase(strList));
+        System.out.println("#3 Starts with A: " + filterStringsStartingWithA(moreStrs));
+        System.out.println("#4 Unique ints: " + uniqueIntegers(intsList));
+        System.out.println("#5 Sum ints: " + sumOfIntegers(intsList));
+        System.out.println("#6 Min int: " + minOfIntegers(intsList));
+        System.out.println("#7 Max int: " + maxOfIntegers(intsList));
+        System.out.println("#8 Join with comma: " + concatenateStringsWithComma(strList));
+        System.out.println("#9 First int or zero: " + getFirstIntegerOrZero(intsList));
+        System.out.println("#10 Last string: " + getLastString(strList));
+        System.out.println("#11 List of squares: " + listOfSquares(intsList));
+        System.out.println("#12 Even numbers: " + filterEvenNumbers(intsList));
+        System.out.println("#13 Users > 18: " + namesOfUsersOlderThan18(users));
+        System.out.println("#14 Sort by length: " + sortStringsByLength(strList));
+        System.out.println("#15 Contains 'Java': " + containsStringWithJava(strList));
+        System.out.println("#16 Merge string lists: " + mergeTwoStringLists(strList, moreStrs));
+        System.out.println("#17 Average of ints: " + averageOfIntegers(intsList));
+        System.out.println("#18 Skip 3 ints: " + discardFirstThreeIntegers(intsList));
+        System.out.println("#19 First 3 ints: " + keepFirstThreeIntegers(intsList));
+        System.out.println("#20 ASCII codes: " + stringToAsciiCodes(Arrays.asList("Ab", "C")));
+        System.out.println("#21 Count > 5 chars: " + countStringsLongerThan5(strList));
+        System.out.println("#22 String->length map: " + stringsToLengthMap(strList));
+        System.out.println("#23 Users sorted by age: " + sortUsersByAge(users));
+        System.out.println("#24 User with max age: " + userWithMaxAge(users).orElse(null));
+        System.out.println("#25 All >3 length?: " + areAllStringsLongerThan3(strList));
+        System.out.println("#26 Every 3rd element: " + selectEvery3rd(strList));
+        System.out.println("#27 Total hobbies: " + totalHobbiesCount(users));
+        System.out.println(
+                "#28 Duplicates: "
+                        + duplicateStrings(Arrays.asList("one", "two", "two", "one", "one")));
+        System.out.println("#29 Convert birthdates: " + convertBirthdatesToString(users));
+        System.out.println("#30 In 'City X': " + filterPersonsByCity(persons, "City X"));
+        System.out.println("#31 Reverse list: " + reverseList(strList));
+        System.out.println(
+                "#32 % nulls: " + percentageOfNulls(Arrays.asList("a", null, null, "b")) + "%");
+        List<String> shuffled = new ArrayList<>(strList);
+        shuffleList(shuffled);
+        System.out.println("#33 Shuffled: " + shuffled);
+        System.out.println("#34 Group by n%3: " + groupByRemainder3(intsList));
+        System.out.println("#35 Even->bool: " + evenIntegersAsBooleans(intsList));
+        System.out.println("#36 Unique, reversed: " + uniqueElementsReversed(intsList));
+        System.out.println("#37 Top 5 random: " + top5Of100Random());
+        System.out.println("#38 Group strings by len: " + groupStringsByLength(strList));
+        System.out.println("#39 Longest string: " + longestString(strList));
+        System.out.println(
+                "#40 Remove names w/ J: "
+                        + removeUsersWithJ(Arrays.asList("Jim", "Bob", "Jane", "Alice")));
+        System.out.println("#41 Int->square map: " + integersToSquareMap(intsList));
+        System.out.println(
+                "#42 Total words in sentences: "
+                        + totalWordsInSentences(Arrays.asList("Hello world", "how are you")));
+        System.out.println("#43 Yes/no even: " + yesNoIfEven(intsList));
+        System.out.println("#44 Range: " + rangeOfNumbers(intsList));
+        System.out.println("#45 Lengths desc: " + lengthsDescending(strList));
+        System.out.println("#46 Sum of string lengths: " + sumStringLengths(strList));
+        System.out.println(
+                "#47 Null elements count: " + countNullElements(Arrays.asList(null, "a", null)));
+        System.out.println("#48 Users by birthyear: " + groupUsersByBirthYear(users));
+        System.out.println(
+                "#49 Unique sorted chars: " + uniqueSortedCharacters(Arrays.asList("cab", "bad")));
+        System.out.println("#50 User names by name len: " + userNamesSortedByLength(users));
     }
 }
